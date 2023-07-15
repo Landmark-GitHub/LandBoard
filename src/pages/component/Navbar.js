@@ -57,65 +57,7 @@ function Navbar({ title, user, setUser }) {
   };
 
   return (
-    <AppBar position="static" className='bg-red-300'>
-      {/* <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'white',
-              textDecoration: 'none',
-              right:0
-            }}
-          >
-            {title}
-          </Typography>
-
-          <Box sx={{ flexGrow: 0 }}>
-            {user ? (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {user}
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <h1 className='font-bold' onClick={() => setLogin(true)}>Login</h1>
-            )}
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={() => selectSetting(setting)}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container> */}
+    <AppBar position="static" sx={{ backgroundColor: `rgb(252 165 165)` }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
@@ -175,7 +117,6 @@ function Navbar({ title, user, setUser }) {
         </Toolbar>
       </Container>
 
-      {/* Modal for Username Input */}
       {login && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-black opacity-75 fixed inset-0" onClick={()=>setLogin(false)}></div>
