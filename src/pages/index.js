@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <main className={`flex min-h-screen flex-col items-center ${inter.className} overflow-hidden`}>
-      <label>123</label>
+      <label>Home</label>
       {/* <Navbar title={'LandBoard'} user={user} setUser={setUser}/>
       <div className='bg-red-300 h-full mt-2 p-2 grid grid-cols-3 gap-1 overflow-x-auto'>
         {Game.map((game) => (
