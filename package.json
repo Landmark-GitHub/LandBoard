@@ -6,19 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "node src/server/socket-server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.0",
     "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
+    "express": "^4.18.2",
     "next": "13.4.10",
+    "nodemon": "^3.0.1",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "socket.io": "^4.7.1",
+    "socket.io-client": "^4.7.1",
     "tailwindcss": "3.3.3"
   }
 }
