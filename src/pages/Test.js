@@ -14,13 +14,13 @@ export default function Test() {
   };
 
   const handleJoinGame = () => {
-    socket.emit('joinGame', username);
+    socket.emit('login', username);
     setLogin(true);
   };
 
   useEffect(() => {
     socket.on('updateUsers', (users) => {
-      setOnlineUsers(users); // อัปเดต state onlineUsers เมื่อมีการอัปเดตจาก Socket
+      setOnlineUsers(users);
     });
 
     return () => {
@@ -31,17 +31,19 @@ export default function Test() {
   return (
     <div className='bg-red-300 p-2'>
       <h1>Welcome to the Game</h1>
-      {login ? (
+      {
+        login ? 
         <label>
-          <label>{username}</label>
-          <button onClick={handleJoinGame}>Out Game</button>
+          <label>{username}</label> 
+          <button onClick={handleJoinGame}>Out Game</button>  
         </label>
-      ) : (
+        : 
         <label>
           <input type="text" value={username} onChange={handleUsernameChange} />
           <button onClick={handleJoinGame}>Join Game</button>
         </label>
-      )}
+      }
+
 
       <h2>Online Users</h2>
       <ul>
