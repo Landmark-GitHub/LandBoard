@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Player from './Player';
 import io from 'socket.io-client';
+import { useRouter } from 'next/router';
 
 const socket = io('http://localhost:3001'); // Connect to the server
 
@@ -8,12 +9,15 @@ const Room = (props) => {
 
   //props
   // username={username}
-  // selectRoom={selectRoom} 
-  // setAreaRoom={setAreaRoom} ปิดเปิด modal
-  // setRoom={setRoom} เก็บ location ทั้งมมด เพื่อไปบอกจำนวนเต็มงงหห้อง
+  // number={selectRoom}
+  // setAreaRoom={setAreaRoom}
+  
+  const router = useRouter
+
+  const username = props.username || router.query.username
+  const number = props.number
 
   const [locations, setLocation] = useState(null);
-  const number = props.selectRoom;
   const [element, setElement] = useState([]);
   const MaxPlayer = 6
 
@@ -33,6 +37,20 @@ const Room = (props) => {
   
     return emptySlots;
   };
+
+  const exitRoom = () => {
+
+    const info = {
+      name: username,
+      room: number
+    }
+
+    console.log(info);
+
+    socket.emit('exitRoom', (info))
+    props.setAreaRoom(false)
+  }
+
   useEffect(() => {
 
     socket.on('updateRoom', (Room) => {
@@ -46,7 +64,7 @@ const Room = (props) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 p-5">
       <div className="bg-black opacity-75 fixed inset-0"></div>
       <div className="bg-white h-full w-full z-20 grid grid-cols-[50%_50%] rounded-lg shadow-xl p-3">
-        <button className="absolute top-5 right-5 text-gray-500" onClick={() => props.setAreaRoom(false)}>
+        <button className="absolute top-5 right-5 text-gray-500" onClick={() => exitRoom()}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>

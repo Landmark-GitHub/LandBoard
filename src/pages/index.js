@@ -16,7 +16,7 @@ const socket = io(`http://localhost:3001`);
 export default function Home() {
 
   const router = useRouter()
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null || router.query.username)
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   const selectGame = (name) => {
@@ -43,7 +43,7 @@ export default function Home() {
     //   socket.off('updateUsers'); // Unsubscribe จาก event เมื่อ component unmount
     // };
 
-  },[]);
+  },[user]);
   
 
   return (

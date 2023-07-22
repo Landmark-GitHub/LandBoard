@@ -10,19 +10,23 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useRouter } from 'next/router';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar({ title, user, setUser }) {
+
+  const router = useRouter();
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const [modalLogin, setModalLogin] = useState(false);
 
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(null || router.query.username);
 
   
   const handleLoginSubmit = () => {

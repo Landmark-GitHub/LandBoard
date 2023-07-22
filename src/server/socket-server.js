@@ -23,20 +23,27 @@ function isUsernameInRoom(room, username) {
 io.on('connection', (socket) => {
 
   socket.on('connecGame', (username) => {
+    
+    // console.log(username + ' connected')
     if (username && !users.includes(username)) {
       return users.push(username);
     }
+
     io.emit('setRoom', Room);
     io.emit('updateUser', users);
   });
 
+  socket.on('outGame', (username) => {
+
+    if (username && users.includes(username)) {
+      users.filter(user => user !== username);
+    }
+    io.emit('setRoom', Room);
+    io.emit('updateUser', users);
+  })
+
   socket.on('joinRoom', (data) => {
-
-    console.log({
-      name: data.name,
-      room: data.room
-    })
-
+    console.log(data.name + ' want Join to room ' + data.room);
     const info = {
       id: (Room[data.room].length + 1),
       name: data.name,
@@ -44,13 +51,28 @@ io.on('connection', (socket) => {
       winner: false
     }
 
-    //data.room = int => Room
     if (Room[data.room].length < 6 && !isUsernameInRoom(Room[data.room], data.name)) {
       Room[data.room].push(info);
     }
 
     io.emit('updateRoom', Room);
   });
+
+  socket.on('exitRoom', (data) => {
+    console.log(data.name + ' want exit to room ' + data.room);
+
+    if (Room[data.room]) {
+      // Filter out the player with the specified name
+      Room[data.room] = Room[data.room].filter(player => player.name !== data.name);
+      console.log(Room);
+      // Broadcast the updated room information to all connected clients
+    }
+
+    // Room[data.room].find(player => player.name === data.name).splice()
+
+    io.emit('updateRoom', Room);
+
+  })
 
   // socket.on('joinRoom', (username, selectRoom) => {
   //   if (users.includes(username)) {

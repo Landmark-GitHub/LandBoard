@@ -12,28 +12,33 @@ const Undercover = () => {
 
     const router = useRouter()
 
-    const ShowRoom = ['1', '2', '3']
-
     const {username} = router.query
-    const [userTotal, setUserTotal] = useState();
+    const [userTotal, setUserTotal] = useState([]);
     const [room, setRoom] = useState();
     const [selectRoom, setSelectRoom] = useState();
 
     const [areaRoom, setAreaRoom] = useState(false);
 
-    function backToHome(username) {
-        router.push({
-            pathname: './',
-            query: { user: username }
-          })
+    const backToHome = (username) => {
+
+        router.push(`http://localhost:3000/?username=${username}`)
+
+        socket.emit('outGame', username);
     }
 
     const connecGame = () => {
         socket.emit('connecGame', username);
     }
 
-    const joinRoom = (data) => {
-        socket.emit('joinRoom', (data));
+    const joinRoom = (index) => {
+        setAreaRoom(true)
+        setSelectRoom(index)
+        let info = {
+            room: index,
+            name: username
+        }
+        console.log(info)
+        socket.emit('joinRoom', (info));
     }
 
     useEffect(() => {
@@ -52,48 +57,48 @@ const Undercover = () => {
             setRoom(Room);
           });
 
-      }, []);
+      }, [userTotal]);
 
     return (
         <main className={`grid min-h-screen grid-rows-[15%_95%] items-center overflow-hidden`}>
             <div className='pl-2 font-bold text-2xl'> 
-                <label className=''>
-                    <p onClick={() => backToHome(username)}>Undercover</p>
-                    <p>{username || "not"}</p>
+                <label className='grid grid-rows-[50%_50%]'>
+                    <label>
+                        <button
+                        className='p-2 bg-slate-800 hover:scale-105'
+                        onClick={() => {backToHome(username)}}>
+                            backJa
+                        </button>
+                        <p>Undercover</p>
+                    </label>
+                    <label>
+                        <p>{username || "not"}</p>
+                        <p>{userTotal.length} online</p>
+                    </label>
                 </label>
             </div>
             <div className=' absolute'>
                 <button className={`bg-red-300 p-4`} onClick={() => 
                     console.log(room)}>
-                    1111
+                    Room Total
                 </button>
                 <button className={`bg-red-300 p-4`} onClick={() => {
                     console.log(userTotal)
                     }}>
-                    12222
+                    user Total
                 </button>
-                <button className={`bg-red-300 p-4`} onClick={() => {
+                {/* <button className={`bg-red-300 p-4`} onClick={() => {
                     console.log(selectRoom)
                     }}>
                     {username}
-                </button>
+                </button> */}
             </div>
             <div className='bg-red-300 h-full mt-2 p-2 grid grid-cols-3 gap-1 overflow-x-auto'>
                 {room ? 
                 <>
                     {Object.keys(room).map((number,index) => (
-                    <div key={index} onClick={() => {
-                        setAreaRoom(true)
-                        setSelectRoom(index+1)
-                        let info = {
-                            room: index+1,
-                            name: username
-                        }
-                        console.log(info)
-                        joinRoom(info)
-                    }}>
-
-                        <CardMenu title={(index+1)} />
+                    <div key={index} onClick={() => joinRoom(index+1)}>
+                        <CardMenu title={(index+1)} data={room[number].length} />
                     </div>
                 ))}
                 </>

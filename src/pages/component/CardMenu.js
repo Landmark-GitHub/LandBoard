@@ -6,7 +6,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-function CardMenu({title, onClick}) {
+function CardMenu({title, onClick, data}) {
+
+  // console.log(data)
+
   return (
     <Card sx={{ maxWidth: 345 } , { maxHeight: 302}} onClick={onClick} className=' hover:scale-105 hover:cursor-pointer'>
       <CardMedia
@@ -20,8 +23,7 @@ function CardMenu({title, onClick}) {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {data}
         </Typography>
       </CardContent>
       <CardActions>
